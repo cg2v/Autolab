@@ -253,7 +253,11 @@ module AssessmentAutograde
   #
   def get_callback_url(course, assessment, submission, dave)
     begin
-      hostname = request.base_url
+      if Rails.env.development?
+        hostname = request.base_url
+      else
+        hostname = "https://" + request.host
+      end
     rescue
       hostname = `hostname`
       hostname = "https://" + hostname.strip
