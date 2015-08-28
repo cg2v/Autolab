@@ -21,8 +21,10 @@
         { title: "Create, modify, and delete user accounts" } %></li>
     <li><%= link_to "Install assessment", [:installAssessment, @course, :assessments], 
         { title: "Create an assessment from scratch or install one from an existing directory" } %></li>
+<% if false # disabled until quizzes don't suck %>
     <li><%= link_to "Install quiz", [:installQuiz, @course, :assessments],
         { title: "Create a quiz" } %></li>
+<% end %>
     <li><%= link_to "Send bulk email", [:email, @course],
         { title: "Send an email to everyone in the class" } %></li>
     <li><%= link_to "Manage course attachments", [@course, :attachments],
