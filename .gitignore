@@ -47,6 +47,7 @@ tags
 .idea/
 .yardoc
 app/views/home/_topannounce.html.erb
+/docker/nginx.conf
 attachments/
 doc/
 out.txt
