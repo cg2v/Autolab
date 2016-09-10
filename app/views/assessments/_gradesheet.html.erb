@@ -128,6 +128,7 @@
               // if doesn't exist in cache (no update yet), then use original value
               score = problem['score'];
             }
+            if (type == "sort" && score != "" && score != "-") return Number(score);
             return score;
           } },
       <% end %>
