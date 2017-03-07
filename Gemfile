@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.0'
+gem 'rails', '=4.2.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 4.0.3'
@@ -45,7 +45,7 @@ gem 'rake', '>=10.3.2'
 gem 'populator', '>=1.0.0'
 
 # To communicate with MySQL database
-gem 'mysql2'
+gem 'mysql2', '=0.3.18'
 gem 'sqlite3'
 
 # Development server
@@ -117,4 +117,4 @@ gem 'prawn', '0.13.0'
 # LDAP Lookup
 gem 'net-ldap'
 
-gem 'sprockets-rails'#, '2.3.3'
+gem 'sprockets-rails', '2.3.3'
