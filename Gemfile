@@ -6,7 +6,7 @@ gem 'rails', '=4.2.1'
 gem 'sass-rails', '>= 4.0.3'
 
 # Use Materialize for the base css
-gem 'materialize-sass'
+gem 'materialize-sass', '~>0.97.0'
 
 # Use for some of the glypicons on the site
 gem 'bootstrap-sass', '~> 3.3.6'
