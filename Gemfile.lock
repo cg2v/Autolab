@@ -332,7 +332,7 @@ DEPENDENCIES
   jbuilder (>= 2.0)
   jquery-rails
   js_cookie_rails
-  materialize-sass
+  materialize-sass (~> 0.97.0)
   momentjs-rails (>= 2.9.0)
   mysql2 (= 0.3.18)
   net-ldap
