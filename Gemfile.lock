@@ -309,7 +309,7 @@ DEPENDENCIES
   httparty
   jbuilder (>= 2.0)
   jquery-rails
-  materialize-sass
+  materialize-sass (~> 0.97.0)
   momentjs-rails (>= 2.9.0)
   mysql2 (= 0.3.18)
   net-ldap
