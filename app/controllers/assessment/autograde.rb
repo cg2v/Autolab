@@ -470,6 +470,22 @@ module AssessmentAutograde
     saveAutograde(submissions, feedback)
   end
 
+  def processResultException(submissions, exception, lines)
+    feedback_str = "An error occurred while parsing the autoresult returned by the Autograder.\n
+        \nError message: #{exception}\n\n"
+    feedback_str += lines.join if lines && (lines.length < 10_000)
+    @assessment.problems.each do |p|
+      submissions.each do |submission|
+        score = submission.scores.find_or_initialize_by(problem_id: p.id)
+        next unless score.new_record? # don't overwrite scores
+        score.score = 0
+        score.feedback = feedback_str
+        score.released = true
+        score.grader_id = 0
+        score.save!
+      end
+    end
+  end
   ##
   # saveAutograde - parses the autoresult returned by the
   # autograding driver on the backend and updates the scores for
@@ -516,10 +532,11 @@ module AssessmentAutograde
           submission.save!
         end
       end
+
+    rescue JSON::ParserError, RuntimeError => exception
+      processResultException(submissions, exception, lines)
+      COURSE_LOGGER.log "Exception in autograde_done: #{exception.class} (#{exception.message})"
     rescue StandardError => exception
-      feedback_str = "An error occurred while parsing the autoresult returned by the Autograder.\n
-        \nError message: #{exception}\n\n"
-      feedback_str += lines.join if lines && (lines.length < 10_000)
       ExceptionNotifier.notify_exception(exception, env: request.env,
                                          data: {
                                            user: current_user,
@@ -529,17 +546,7 @@ module AssessmentAutograde
                                          })
       Rails.logger.error "Exception in autograde_done: #{exception.class} (#{exception.message})"
       COURSE_LOGGER.log "Exception in autograde_done: #{exception.class} (#{exception.message})"
-      @assessment.problems.each do |p|
-        submissions.each do |submission|
-          score = submission.scores.find_or_initialize_by(problem_id: p.id)
-          next unless score.new_record? # don't overwrite scores
-          score.score = 0
-          score.feedback = feedback_str
-          score.released = true
-          score.grader_id = 0
-          score.save!
-        end
-      end
+      processResultException(submissions, exception, lines)
     end
 
     submissions.each do |submission|
