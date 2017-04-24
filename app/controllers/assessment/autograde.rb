@@ -516,11 +516,20 @@ module AssessmentAutograde
           submission.save!
         end
       end
-    rescue StandardError => e
+    rescue StandardError => exception
       feedback_str = "An error occurred while parsing the autoresult returned by the Autograder.\n
-        \nError message: #{e}\n\n"
+        \nError message: #{exception}\n\n"
       feedback_str += lines.join if lines && (lines.length < 10_000)
-			@assessment.problems.each do |p|
+      ExceptionNotifier.notify_exception(exception, env: request.env,
+                                         data: {
+                                           user: current_user,
+                                           course: @course,
+                                           assessment: @assessment,
+                                           submission: @submission
+                                         })
+      Rails.logger.error "Exception in autograde_done: #{exception.class} (#{exception.message})"
+      COURSE_LOGGER.log "Exception in autograde_done: #{exception.class} (#{exception.message})"
+      @assessment.problems.each do |p|
         submissions.each do |submission|
           score = submission.scores.find_or_initialize_by(problem_id: p.id)
           next unless score.new_record? # don't overwrite scores
