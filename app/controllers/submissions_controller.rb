@@ -354,7 +354,8 @@ class SubmissionsController < ApplicationController
     else
       begin
         render(:view) && return
-      rescue
+      rescue => exception
+        Rails.logger.info("Cannot render text file: #{exception.class} (#{exception.message}")
         flash[:error] = "Autolab cannot display this file"
         if params[:header_position]
           redirect_to([:list_archive, @course, @assessment, @submission]) && return
