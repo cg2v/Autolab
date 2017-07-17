@@ -324,13 +324,13 @@ module AssessmentHandin
         score.save!
       end
     rescue StandardError => e
-      ExceptionNotifier.notify_exception(e, env: request.env,
-                                            data: {
-                                              user: current_user,
-                                              course: @course,
-                                              assessment: @assessment,
-                                              submission: submission,
-                                            })
+      #ExceptionNotifier.notify_exception(e, env: request.env,
+      #                                      data: {
+      #                                        user: current_user,
+      #                                        course: @course,
+      #                                        assessment: @assessment,
+      #                                        submission: submission,
+      #                                      })
       COURSE_LOGGER.log(e.to_s)
     end
 
