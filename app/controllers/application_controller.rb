@@ -377,4 +377,7 @@ private
       format.js { head :internal_server_error }
     end
   end
+  def after_sign_out_path_for(resource_or_scope)
+      "/Shibboleth.sso/Logout?return=https://login.cmu.edu/idp/logout"
+  end
 end
