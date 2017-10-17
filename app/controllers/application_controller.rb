@@ -262,33 +262,44 @@ protected
   end
 
   def run_scheduler
-    actions = Scheduler.where("next < ?", Time.now)
-    actions.each do |action|
-      action.next = Time.now + action.interval
-      action.save
-      Rails.logger.info("Executing #{Rails.root.join(action.action)}")
-      begin
-        pid = fork do
-          # child process
-          @course = action.course
-          COURSE_LOGGER.setCourse(@course)
-          mod_name = Rails.root.join(action.action)
-          begin
-            require mod_name
-            Updater.update(@course)
-          rescue ScriptError, StandardError => e
-            Rails.logger.error("Error in '#{@course.name}' updater: #{e.message}")
-            Rails.logger.error(e.backtrace.inspect)
-            ExceptionNotifier.notify_exception(e, data: {action_script: action.action, course: @course})
-          end
-        end
-
-        Process.detach(pid)
-      rescue StandardError => e
-        Rails.logger.error("Cannot fork '#{@course.name}' updater: #{e.message}")
-        ExceptionNotifier.notify_exception(e)
+   lockfile=Rails.root.join("config.ru")
+   begin
+     File.open(lockfile, File::RDWR)  {|f|
+      if not f.flock(File::LOCK_EX|File::LOCK_NB) then
+         return
       end
-    end
+      actions = Scheduler.where("next < ?", Time.now)
+      actions.each do |action|
+        action.next = Time.now + action.interval
+        action.save
+        Rails.logger.info("Executing #{Rails.root.join(action.action)}")
+        begin
+          pid = fork do
+            # child process
+            @course = action.course
+            COURSE_LOGGER.setCourse(@course)
+            mod_name = Rails.root.join(action.action)
+            begin
+              require mod_name
+              Updater.update(@course)
+            rescue ScriptError, StandardError => e
+              Rails.logger.error("Error in '#{@course.name}' updater: #{e.message}")
+              Rails.logger.error(e.backtrace.inspect)
+              ExceptionNotifier.notify_exception(e, data: {action_script: action.action, course: @course})
+            end
+          end
+
+          Process.detach(pid)
+        rescue StandardError => e
+          Rails.logger.error("Cannot fork '#{@course.name}' updater: #{e.message}")
+          ExceptionNotifier.notify_exception(e)
+        end
+      end
+     }
+   rescue SystemCallError => e
+     Rails.logger.error("Cannot get updater lock on #{lockfile}: #{e.message}")
+     ExceptionNotifier.notify_exception(e)
+   end
   end
 
   def update_persistent_announcements
