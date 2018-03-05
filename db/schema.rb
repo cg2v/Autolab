@@ -53,10 +53,10 @@ ActiveRecord::Schema.define(version: 20171228095028) do
     t.integer  "membership_status",    limit: 1,   default: 0
   end
 
-  add_index "assessment_user_data", ["assessment_id"], name: "index_assessment_user_data_on_assessment_id", using: :btree
-  add_index "assessment_user_data", ["course_user_datum_id", "assessment_id"], name: "index_AUDs_on_CUD_id_and_assessment_id", using: :btree
-  add_index "assessment_user_data", ["course_user_datum_id"], name: "index_assessment_user_data_on_course_user_datum_id", using: :btree
-  add_index "assessment_user_data", ["latest_submission_id"], name: "index_assessment_user_data_on_latest_submission_id", unique: true, using: :btree
+  add_index "assessment_user_data", ["assessment_id"], name: "index_assessment_user_data_on_assessment_id"
+  add_index "assessment_user_data", ["course_user_datum_id", "assessment_id"], name: "index_AUDs_on_CUD_id_and_assessment_id"
+  add_index "assessment_user_data", ["course_user_datum_id"], name: "index_assessment_user_data_on_course_user_datum_id"
+  add_index "assessment_user_data", ["latest_submission_id"], name: "index_assessment_user_data_on_latest_submission_id", unique: true
 
   create_table "assessments", force: :cascade do |t|
     t.datetime "due_at"
@@ -86,17 +86,17 @@ ActiveRecord::Schema.define(version: 20171228095028) do
     t.boolean  "has_autograde_old",       limit: 1
     t.boolean  "has_scoreboard_old",      limit: 1
     t.boolean  "has_svn",                 limit: 1
-    t.string   "remote_handin_path",      limit: 255
     t.boolean  "quiz",                    limit: 1,     default: false
     t.text     "quizData",                limit: 65535
-    t.integer  "group_size",              limit: 4,     default: 1
+    t.string   "remote_handin_path",      limit: 255
     t.string   "category_name",           limit: 255
-    t.boolean  "has_custom_form",         limit: 1,     default: false
-    t.text     "languages",               limit: 65535
-    t.text     "textfields",              limit: 65535
-    t.text     "embedded_quiz_form_data", limit: 65535
-    t.boolean  "embedded_quiz",           limit: 1
-    t.binary   "embedded_quiz_form",      limit: 65535
+    t.integer  "group_size",              limit: 4,     default: 1
+    t.boolean  "has_custom_form",                       default: false
+    t.text     "languages"
+    t.text     "textfields"
+    t.text     "embedded_quiz_form_data"
+    t.boolean  "embedded_quiz"
+    t.binary   "embedded_quiz_form"
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20171228095028) do
     t.integer  "assessment_id", limit: 4
   end
 
-  add_index "attachments", ["assessment_id"], name: "index_attachments_on_assessment_id", using: :btree
+  add_index "attachments", ["assessment_id"], name: "index_attachments_on_assessment_id"
 
   create_table "authentications", force: :cascade do |t|
     t.string   "provider",   limit: 255, null: false
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20171228095028) do
   create_table "module_data", force: :cascade do |t|
     t.integer "field_id", limit: 4
     t.integer "data_id",  limit: 4
-    t.binary  "data",     limit: 65535
+    t.binary  "data"
   end
 
   create_table "module_fields", force: :cascade do |t|
@@ -185,63 +185,60 @@ ActiveRecord::Schema.define(version: 20171228095028) do
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
-    t.integer  "resource_owner_id", limit: 4,     null: false
-    t.integer  "application_id",    limit: 4,     null: false
-    t.string   "token",             limit: 255,   null: false
-    t.integer  "expires_in",        limit: 4,     null: false
-    t.text     "redirect_uri",      limit: 65535, null: false
-    t.datetime "created_at",                      null: false
+    t.integer  "resource_owner_id", null: false
+    t.integer  "application_id",    null: false
+    t.string   "token",             null: false
+    t.integer  "expires_in",        null: false
+    t.text     "redirect_uri",      null: false
+    t.datetime "created_at",        null: false
     t.datetime "revoked_at"
-    t.string   "scopes",            limit: 255
+    t.string   "scopes"
   end
 
-  add_index "oauth_access_grants", ["application_id"], name: "fk_rails_b4b53e07b8", using: :btree
-  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true
 
   create_table "oauth_access_tokens", force: :cascade do |t|
-    t.integer  "resource_owner_id",      limit: 4
-    t.integer  "application_id",         limit: 4
-    t.string   "token",                  limit: 255,              null: false
-    t.string   "refresh_token",          limit: 255
-    t.integer  "expires_in",             limit: 4
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",                               null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
     t.datetime "revoked_at"
-    t.datetime "created_at",                                      null: false
-    t.string   "scopes",                 limit: 255
-    t.string   "previous_refresh_token", limit: 255, default: "", null: false
+    t.datetime "created_at",                          null: false
+    t.string   "scopes"
+    t.string   "previous_refresh_token", default: "", null: false
   end
 
-  add_index "oauth_access_tokens", ["application_id"], name: "fk_rails_732cb83ab7", using: :btree
-  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
-  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
-  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true
 
   create_table "oauth_applications", force: :cascade do |t|
-    t.string   "name",         limit: 255,                null: false
-    t.string   "uid",          limit: 255,                null: false
-    t.string   "secret",       limit: 255,                null: false
-    t.text     "redirect_uri", limit: 65535,              null: false
-    t.string   "scopes",       limit: 255,   default: "", null: false
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "name",                      null: false
+    t.string   "uid",                       null: false
+    t.string   "secret",                    null: false
+    t.text     "redirect_uri",              null: false
+    t.string   "scopes",       default: "", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true
 
   create_table "oauth_device_flow_requests", force: :cascade do |t|
-    t.integer  "application_id",    limit: 4,                null: false
-    t.string   "scopes",            limit: 255, default: "", null: false
-    t.string   "device_code",       limit: 255,              null: false
-    t.string   "user_code",         limit: 255,              null: false
-    t.datetime "requested_at",                               null: false
-    t.integer  "resolution",        limit: 4,   default: 0,  null: false
+    t.integer  "application_id",                 null: false
+    t.string   "scopes",            default: "", null: false
+    t.string   "device_code",                    null: false
+    t.string   "user_code",                      null: false
+    t.datetime "requested_at",                   null: false
+    t.integer  "resolution",        default: 0,  null: false
     t.datetime "resolved_at"
-    t.integer  "resource_owner_id", limit: 4
-    t.string   "access_code",       limit: 255
+    t.integer  "resource_owner_id"
+    t.string   "access_code"
   end
 
-  add_index "oauth_device_flow_requests", ["application_id"], name: "fk_rails_4035c6e0ed", using: :btree
-  add_index "oauth_device_flow_requests", ["device_code"], name: "index_oauth_device_flow_requests_on_device_code", unique: true, using: :btree
-  add_index "oauth_device_flow_requests", ["user_code"], name: "index_oauth_device_flow_requests_on_user_code", unique: true, using: :btree
+  add_index "oauth_device_flow_requests", ["device_code"], name: "index_oauth_device_flow_requests_on_device_code", unique: true
+  add_index "oauth_device_flow_requests", ["user_code"], name: "index_oauth_device_flow_requests_on_user_code", unique: true
 
   create_table "problems", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -285,8 +282,8 @@ ActiveRecord::Schema.define(version: 20171228095028) do
     t.integer  "grader_id",     limit: 4
   end
 
-  add_index "scores", ["problem_id", "submission_id"], name: "problem_submission_unique", unique: true, using: :btree
-  add_index "scores", ["submission_id"], name: "index_scores_on_submission_id", using: :btree
+  add_index "scores", ["problem_id", "submission_id"], name: "problem_submission_unique", unique: true
+  add_index "scores", ["submission_id"], name: "index_scores_on_submission_id"
 
   create_table "submissions", force: :cascade do |t|
     t.integer  "version",                   limit: 4
@@ -305,13 +302,13 @@ ActiveRecord::Schema.define(version: 20171228095028) do
     t.integer  "tweak_id",                  limit: 4
     t.boolean  "ignored",                   limit: 1,     default: false, null: false
     t.string   "dave",                      limit: 255
-    t.text     "settings",                  limit: 65535
-    t.text     "embedded_quiz_form_answer", limit: 65535
-    t.integer  "submitted_by_app_id",       limit: 4
+    t.text     "settings"
+    t.text     "embedded_quiz_form_answer"
+    t.integer  "submitted_by_app_id"
   end
 
-  add_index "submissions", ["assessment_id"], name: "index_submissions_on_assessment_id", using: :btree
-  add_index "submissions", ["course_user_datum_id"], name: "index_submissions_on_course_user_datum_id", using: :btree
+  add_index "submissions", ["assessment_id"], name: "index_submissions_on_assessment_id"
+  add_index "submissions", ["course_user_datum_id"], name: "index_submissions_on_course_user_datum_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",    null: false
@@ -338,11 +335,8 @@ ActiveRecord::Schema.define(version: 20171228095028) do
     t.string   "year",                   limit: 255
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
-  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "oauth_device_flow_requests", "oauth_applications", column: "application_id"
 end
