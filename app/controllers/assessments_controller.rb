@@ -88,16 +88,13 @@ class AssessmentsController < ApplicationController
   def installAssessment
     ass_dir = Rails.root.join("courses", @course.name)
     @unused_config_files = []
-    flash[:error] = ""
     Dir.foreach(ass_dir) do |filename|
       # assessment's yaml file must exist
       if !File.exist?(File.join(ass_dir, filename, "#{filename}.yml"))
-        flash[:error] += "Yml does not exist: " + filename +"     -     "
         next
       end
       # names must be only lowercase letters and digits
       if filename =~ /[^a-z0-9]/
-        flash[:error] += "Name must be only lowercase letters and digits: "+filename
         next
       end
 
