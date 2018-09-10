@@ -48,11 +48,15 @@ class SchedulersController < ApplicationController
     @log = "Executing #{Rails.root.join(action.action)}\n"
     mod_name = Rails.root.join(action.action)
     begin
-      require mod_name
+      load mod_name
       Updater.update(action.course)
     rescue ScriptError, StandardError => e
       @log << ("Error in '#{@course.name}' updater: #{e.message}\n")
       @log << (e.backtrace.join("\n\t"))
+    end
+    begin
+      Object.send(:remove_const, :Updater)
+    rescue NameError
     end
     @log << "\nCompleted running action."
     render partial: "visual_test"
