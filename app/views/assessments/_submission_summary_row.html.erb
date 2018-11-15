@@ -90,9 +90,7 @@
   <% end %>
 
   <% if @course.grace_days >= 0 then %>
-    <td title="Submitted <%= submission.days_late %> days late" >
-      </nobr>
-    </td>
+    <td>Submitted <%= submission.days_late %> days late</td>
   <% end %>
 
   <% if @assessment.version_penalty? %>
