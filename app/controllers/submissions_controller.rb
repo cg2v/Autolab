@@ -26,6 +26,7 @@ class SubmissionsController < ApplicationController
   def new
     @submission = @assessment.submissions.new(tweak: Tweak.new)
 
+    @user_map = {}
     if !params["course_user_datum_id"].nil?
       cud_ids = params["course_user_datum_id"].split(",")
       @cuds = @course.course_user_data.find(cud_ids)
@@ -36,10 +37,9 @@ class SubmissionsController < ApplicationController
         render([@course, @assessment, :submissions]) && return
       end
     else
-      @cuds = {}
       # TODO: change order
       for cud in @course.course_user_data.joins(:user).order("email ASC") do
-        @cuds[cud.full_name_with_email] = cud.id
+        @user_map[cud.full_name_with_email] = cud.id
       end
     end
   end
