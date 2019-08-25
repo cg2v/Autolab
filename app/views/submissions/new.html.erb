@@ -7,7 +7,7 @@
   <script type="application/javascript">
     jQuery(function() {
       userData = {
-        <% @cuds.each do |k,v| %>
+        <% @user_map.each do |k,v| %>
           "<%= j k.html_safe %>": "<%= v %>",
         <% end %>
       };
@@ -17,7 +17,7 @@
       $hiddenCUDField = $('#submission_course_user_datum_id');
       $studentAutocompleteField.autocomplete({
         data: {
-          <% @cuds.each do |k,v| %>
+          <% @user_map.each do |k,v| %>
             "<%= j k.html_safe %>": null,
           <% end %>
         }
