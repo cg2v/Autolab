@@ -55,7 +55,10 @@ class SchedulersController < ApplicationController
         @log << ("Error in '#{@course.name}' updater: #{e.message}\n")
         @log << (e.backtrace.join("\n\t"))
       end
-      Object.send(:remove_const, :Updater)
+      begin
+         Object.send(:remove_const, :Updater)
+      rescue NameError
+      end
       @log << "\nCompleted running action."
       render :partial => 'visual_test'
   end
