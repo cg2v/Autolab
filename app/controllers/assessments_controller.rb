@@ -605,6 +605,7 @@ class AssessmentsController < ApplicationController
 
   def valid_json?(json)
     JSON.parse(json)
+    return hash.is_a? Hash
   rescue JSON::ParserError, TypeError
     false
   end
