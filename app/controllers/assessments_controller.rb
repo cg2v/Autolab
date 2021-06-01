@@ -554,6 +554,9 @@ class AssessmentsController < ApplicationController
 
   def parseScore(feedback)
     lines = feedback.lines
+    if lines.length < 5
+       return nil
+    end
     feedback = lines[lines.length - 1].chomp
 
     return unless valid_json?(feedback)
@@ -585,6 +588,9 @@ class AssessmentsController < ApplicationController
 
   def parseFeedback(feedback)
     lines = feedback.lines
+    if lines.length < 5
+       return nil
+    end
     feedback = lines[lines.length - 2]&.chomp
 
     return unless valid_json?(feedback)
