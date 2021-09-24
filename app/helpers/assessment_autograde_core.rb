@@ -311,6 +311,12 @@ module AssessmentAutogradeCore
   def autogradeDone(submissions, feedback)
     ass_dir = @assessment.folder_path
 
+    feedback.force_encoding("UTF-8")
+    if not feedback.valid_encoding?
+       feedback.force_encoding("ASCII-8BIT")
+       hexify = Proc.new {|c| "\\x" + c.bytes[0].to_s(16) }
+       feedback = feedback.encode("UTF-8", invalid: :replace, fallback: hexify)
+    end
     submissions.each do |submission|
       filename = submission.autograde_feedback_filename
 
