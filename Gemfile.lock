@@ -246,17 +246,16 @@ GEM
     octokit (4.22.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
-    omniauth (2.0.4)
+    omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
-      rack-protection
     omniauth-facebook (9.0.0)
       omniauth-oauth2 (~> 1.2)
-    omniauth-google-oauth2 (1.0.0)
+    omniauth-google-oauth2 (0.8.2)
       jwt (>= 2.0)
       oauth2 (~> 1.1)
-      omniauth (~> 2.0)
-      omniauth-oauth2 (~> 1.7.1)
+      omniauth (~> 1.1)
+      omniauth-oauth2 (>= 1.6)
     omniauth-oauth2 (1.7.2)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
@@ -287,8 +286,6 @@ GEM
     rack (2.2.3.1)
     rack-attack (6.6.0)
       rack (>= 1.0, < 3)
-    rack-protection (2.2.0)
-      rack
     rack-ssl-enforcer (0.2.9)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -463,9 +460,9 @@ DEPENDENCIES
   newrelic_rpm
   oauth2
   octokit (~> 4.0)
-  omniauth (>= 1.2.2)
+  omniauth (>= 1.2.2, < 2)
   omniauth-facebook (>= 2.0.0)
-  omniauth-google-oauth2 (>= 0.2.5)
+  omniauth-google-oauth2 (>= 0.2.5, < 1)
   omniauth-shibboleth (>= 1.1.2)
   overcommit
   populator (>= 1.0.0)
