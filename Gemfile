@@ -56,9 +56,9 @@ gem 'thin'
 
 # External authentication
 gem 'devise', '>=4.5.0'
-gem 'omniauth', '>=1.2.2'
+gem 'omniauth', '>=1.2.2', '<2'
 gem 'omniauth-facebook', '>=2.0.0'
-gem 'omniauth-google-oauth2', '>=0.2.5'
+gem 'omniauth-google-oauth2', '>=0.2.5', '<1'
 gem 'omniauth-shibboleth', '>=1.1.2'
 
 # OAuth2 authentication
