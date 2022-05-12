@@ -179,7 +179,7 @@ Rails.application.routes.draw do
 
     resources :course_user_data do
       resource :gradebook, only: :show do
-        get "bulkRelease"
+        get "bulk_release"
         get "csv"
         get "invalidate"
         get "statistics"
@@ -195,7 +195,7 @@ Rails.application.routes.draw do
     end
 
     member do
-      get "bulkRelease"
+      get "bulk_release"
       get "download_roster"
       match "email", via: [:get, :post]
       get "manage"
