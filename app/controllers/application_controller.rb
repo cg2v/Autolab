@@ -278,7 +278,7 @@ protected
               # child process
               @course = action.course
               COURSE_LOGGER.setCourse(@course)
-              mod_name = Rails.root.join(action.action)
+              mod_name = Rails.root.join(action.action).to_path
               begin
                 require mod_name
                 Updater.update(@course)
