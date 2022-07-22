@@ -161,3 +161,6 @@ gem 'mimemagic', '>= 0.3.7'
 # For encrypting API tokens
 gem 'lockbox'
 
+# force old psych
+gem 'rdoc', '<6.4'
+gem 'psych', '<4'
