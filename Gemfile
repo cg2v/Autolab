@@ -171,3 +171,6 @@ gem 'lockbox'
 gem "jwt"
 
 gem 'erb_lint', require: false
+# force old psych
+gem 'rdoc', '<6.4'
+gem 'psych', '<4'
