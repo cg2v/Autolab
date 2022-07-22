@@ -263,8 +263,7 @@ GEM
       pdf-reader (~> 1.2)
       ruby-rc4
       ttfunk (~> 1.0.3)
-    psych (4.0.4)
-      stringio
+    psych (3.3.2)
     public_suffix (4.0.7)
     racc (1.6.0)
     rack (2.2.4)
@@ -301,8 +300,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    rdoc (6.4.0)
-      psych (>= 4.0.0)
+    rdoc (6.1.2.1)
     regexp_parser (2.5.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -375,7 +373,6 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.4)
-    stringio (3.0.2)
     terser (1.1.11)
       execjs (>= 0.3.0, < 3)
     thin (1.8.1)
@@ -455,11 +452,13 @@ DEPENDENCIES
   overcommit
   populator (>= 1.0.0)
   prawn (= 0.13.0)
+  psych (< 4)
   rack-attack
   rack-ssl-enforcer
   rack-test
   rails (= 6.0.5)
   rake (>= 10.3.2)
+  rdoc (< 6.4)
   rspec-rails (>= 3.5.0)
   rubocop
   rubocop-rails
@@ -480,4 +479,4 @@ RUBY VERSION
    ruby 2.6.8p205
 
 BUNDLED WITH
-   2.3.9
+   2.3.8
