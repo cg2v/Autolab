@@ -163,3 +163,7 @@ gem 'lockbox'
 
 # to decode / verify jwts for LTI Integration
 gem "jwt"
+
+# force old psych
+gem 'rdoc', '<6.4'
+gem 'psych', '<4'
