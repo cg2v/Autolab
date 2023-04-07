@@ -80,18 +80,7 @@ GEM
       rails (>= 3.1)
     builder (3.2.4)
     byebug (11.1.3)
-    capybara (3.36.0)
-      addressable
-      matrix
-      mini_mime (>= 0.1.3)
-      nokogiri (~> 1.8)
-      rack (>= 1.6.0)
-      rack-test (>= 0.6.3)
-      regexp_parser (>= 1.5, < 3.0)
-      xpath (~> 3.2)
     childprocess (4.1.0)
-    codeclimate-test-reporter (1.0.9)
-      simplecov (<= 0.13)
     coderay (1.1.3)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -173,8 +162,6 @@ GEM
     jstz-rails3-plus (1.0.5)
       railties (>= 3.1)
     jwt (2.5.0)
-    launchy (2.5.2)
-      addressable (~> 2.8)
     libv8-node (16.10.0.0)
     libv8-node (16.10.0.0-arm64-darwin)
     libv8-node (16.10.0.0-x86_64-darwin)
@@ -357,10 +344,6 @@ GEM
       faraday (>= 0.17.3, < 3)
     sdoc (2.4.0)
       rdoc (>= 5.0)
-    selenium-webdriver (4.8.0)
-      rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 3.0)
-      websocket (~> 1.0)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -398,10 +381,6 @@ GEM
     unicode-display_width (2.2.0)
     warden (1.2.9)
       rack (>= 2.0.9)
-    webdrivers (5.2.0)
-      nokogiri (~> 1.6)
-      rubyzip (>= 1.3.0)
-      selenium-webdriver (~> 4.0)
     webmock (3.14.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -431,8 +410,6 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (>= 4.17.47)
   browser-timezone-rails
   byebug (>= 3.5.1)
-  capybara
-  codeclimate-test-reporter
   coffee-rails (>= 4.0.0)
   database_cleaner
   devise (>= 4.5.0)
@@ -448,7 +425,6 @@ DEPENDENCIES
   js_cookie_rails
   jstz-rails3-plus (>= 1.0)
   jwt
-  launchy
   lockbox
   materialize-sass (= 1.0.0)
   mimemagic (>= 0.3.7)
@@ -480,7 +456,6 @@ DEPENDENCIES
   rubyzip
   sass-rails (>= 4.0.3)
   sdoc (>= 0.4.0)
-  selenium-webdriver (>= 4.7.1)
   slack-notifier
   spring
   sprockets-rails (>= 3.2.1)
@@ -488,12 +463,11 @@ DEPENDENCIES
   terser (>= 1.1.7)
   thin
   tzinfo-data
-  webdrivers
   webmock
   yard
 
 RUBY VERSION
-   ruby 2.7.7p221
+   ruby 2.6.8p205
 
 BUNDLED WITH
    2.4.4
