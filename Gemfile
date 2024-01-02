@@ -180,3 +180,4 @@ gem 'friendly_id', '~> 5.5.0'
 
 # to sanitize CSV files
 gem 'csv-safe'
+gem 'passenger', require: false
