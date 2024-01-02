@@ -259,6 +259,9 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
+    passenger (6.0.19)
+      rack
+      rake (>= 0.8.1)
     pdf-reader (1.4.1)
       Ascii85 (~> 1.0.0)
       afm (~> 0.2.1)
@@ -271,7 +274,6 @@ GEM
       pdf-reader (~> 1.2)
       ruby-rc4
       ttfunk (~> 1.0.3)
-    psych (3.3.2)
     public_suffix (4.0.7)
     racc (1.7.0)
     rack (2.2.7)
@@ -475,15 +477,14 @@ DEPENDENCIES
   omniauth-google-oauth2 (>= 0.2.5, < 1)
   omniauth-shibboleth (>= 1.1.2)
   overcommit
+  passenger
   populator (>= 1.0.0)
   prawn (= 0.13.0)
-  psych (< 4)
   rack-attack
   rack-ssl-enforcer
   rack-test
   rails (= 6.0.5)
   rake (>= 10.3.2)
-  rdoc (< 6.4)
   rspec-rails (>= 3.5.0)
   rubocop
   rubocop-rails
