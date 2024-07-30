@@ -84,10 +84,12 @@ private
       address: params['address'],
       port: params['port'],
       enable_starttls_auto: params['enable_starttls_auto'] == 'true',
-      authentication: params['authentication'] == 'none' ? nil : params['authentication'],
-      user_name: params['username'] == "" ? nil : params['username'],
-      password: params['password'] == "" ? nil : params['password']
     }
+    if params.key?('authentication') && params['authentication'].present? && params['authentication'] != 'none' then
+      smtp_settings[:authentication] = params['authentication']
+      smtp_settings[:user_name] = params['username'] == "" ? nil : params['username']
+      smtp_settings[:password] = params['password'] == "" ? nil : params['password']
+    end
 
     if params.key?(:domain) && !params[:domain].empty?
       smtp_settings[:domain] = params['domain']
