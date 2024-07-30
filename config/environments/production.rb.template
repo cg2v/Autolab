@@ -129,10 +129,13 @@ Autolab3::Application.configure do
       address: config_hash['address'],
       port: config_hash['port'],
       enable_starttls_auto: config_hash['enable_starttls_auto'],
-      authentication: config_hash['plain'],
-      user_name: config_hash['user_name'],
-      password: config_hash['password']
     }
+
+    if config_hash.key?('username') && config_hash['username'].present?
+      smtp_settings[:authentication] = config_hash['authentication']
+      smtp_settings[:user_name] = config_hash['username']
+      smtp_settings[:password] = config_hash['password']
+    end
 
     if config_hash.key?('domain') && !config_hash['domain'].empty?
       smtp_settings[:domain] = config_hash['domain']
